@@ -18,15 +18,29 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-
+    /**
+     * Will create the transaction in database against account number
+     * @param transactionTime
+     * @param amount
+     * @param custId
+     * @param accountNumber
+     * @param description
+     * @param transactionType
+     * @return
+     */
     @PostMapping("{transactionType}")
     public TransactionModel transactions( @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime transactionTime,@RequestParam BigDecimal amount, @RequestParam String custId, @RequestParam String accountNumber, @RequestParam String description,@PathVariable TransactionType transactionType)
     {
-        //"/{transactioType}"
-        //,
         return transactionService.createTransaction(custId,transactionTime,accountNumber,transactionType,amount,description);
     }
 
+    /**
+     *Will get the transaction on by accepting account number
+     * @param pageNo
+     * @param pageSize
+     * @param accountNumber
+     * @return
+     */
     @GetMapping
     public Page<TransactionModel> transactions(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam String accountNumber)
     {

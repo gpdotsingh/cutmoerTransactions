@@ -15,9 +15,11 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
+/**
+ *
+ */
 @Component
-public class AccountDaoImpl implements AccountDao{
+public class TransactionDaoImpl implements TransactionDao {
 
 
     @Autowired
@@ -28,6 +30,13 @@ public class AccountDaoImpl implements AccountDao{
     Page<TransactionEntity> allByAccountId =null;
     Page<TransactionModel> transactionModels = null;
 
+    /**
+     *  Fetch data from database and will transform them to transaction model
+     * @param pageSize
+     * @param pageNo
+     * @param accountNumber
+     * @return
+     */
     public Page<TransactionModel>  getTransactionPage(int pageSize, int pageNo, String accountNumber){
 
             Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC,"id"));
@@ -38,15 +47,25 @@ public class AccountDaoImpl implements AccountDao{
         return transactionModels;
     }
 
+    /**
+     *  Will generate object for new transaction type
+     * @param custId
+     * @param accountNumber
+     * @param transactionTime
+     * @param transactionType
+     * @param amount
+     * @param description
+     * @return
+     */
     @Override
     public TransactionModel createTransaction(String custId, String accountNumber, LocalDateTime transactionTime, TransactionType transactionType, BigDecimal amount,String description) {
 
         TransactionEntity transactionEntity = new TransactionEntity();
+        transactionEntity.setAccountNumber(accountNumber);
         transactionEntity.setTransactionType(transactionType);
         transactionEntity.setTransactionId(null);
         transactionEntity.setTransactionTime(transactionTime);
         transactionEntity.setTransactionDescription(description);
-        transactionEntity.setAccountNumber(accountNumber);
         transactionEntity.setAmount(amount);
         TransactionEntity updatedTransaction = transactionRepo.save(transactionEntity);
         return utilDto.entityToModelTransaction(updatedTransaction);

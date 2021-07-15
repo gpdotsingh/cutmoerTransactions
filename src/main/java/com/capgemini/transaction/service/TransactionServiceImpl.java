@@ -1,6 +1,6 @@
 package com.capgemini.transaction.service;
 
-import com.capgemini.transaction.dao.AccountDao;
+import com.capgemini.transaction.dao.TransactionDao;
 import com.capgemini.transaction.enums.TransactionType;
 import com.capgemini.transaction.model.TransactionModel;
 import com.capgemini.transaction.util.UtilDto;
@@ -15,19 +15,34 @@ import java.time.LocalDateTime;
 public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
-    UtilDto utilDto ;
-    @Autowired
-    AccountDao accountDao;
+    TransactionDao transactionDao;
 
+    /***
+     *  Create transaction dao and insert data in db
+     * @param custId
+     * @param transactionTime
+     * @param accountNumber
+     * @param type
+     * @param amount
+     * @param description
+     * @return
+     */
     @Override
     public TransactionModel createTransaction(String custId, LocalDateTime transactionTime, String accountNumber, TransactionType type, BigDecimal amount,String description)
     {
-        return accountDao.createTransaction(custId,accountNumber,transactionTime,type,amount,description);
+        return transactionDao.createTransaction(custId,accountNumber,transactionTime,type,amount,description);
     }
 
+    /**
+     *
+     * @param pageSize
+     * @param pageNo
+     * @param accountNumber
+     * @return
+     */
     @Override
     public Page<TransactionModel> getTransaction(int pageSize, int pageNo, String accountNumber) {
-        return accountDao.getTransactionPage(pageSize,pageNo,accountNumber);
+        return transactionDao.getTransactionPage(pageSize,pageNo,accountNumber);
     }
 }
 
