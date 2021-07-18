@@ -29,9 +29,14 @@ public class TransactionController {
      * @return
      */
     @PostMapping("{transactionType}")
-    public TransactionModel transactions( @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime transactionTime,@RequestParam BigDecimal amount, @RequestParam String custId, @RequestParam String accountNumber, @RequestParam String description,@PathVariable TransactionType transactionType)
+    public TransactionModel transactions(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime transactionTime
+            ,@RequestParam BigDecimal amount, @RequestParam String custId
+            , @RequestParam String accountNumber, @RequestParam String description
+            ,@PathVariable TransactionType transactionType)
     {
-        return transactionService.createTransaction(custId,transactionTime,accountNumber,transactionType,amount,description);
+        return transactionService.createTransaction(custId,transactionTime
+                ,accountNumber,transactionType,amount,description);
     }
 
     /**
@@ -42,7 +47,8 @@ public class TransactionController {
      * @return
      */
     @GetMapping
-    public Page<TransactionModel> transactions(@RequestParam int pageNo, @RequestParam int pageSize, @RequestParam String accountNumber)
+    public Page<TransactionModel> transactions(@RequestParam int pageNo
+            , @RequestParam int pageSize, @RequestParam String accountNumber)
     {
         return transactionService.getTransaction(pageSize,pageNo,accountNumber);
     }

@@ -27,13 +27,16 @@ public class UtilDto {
     }
 
     Function<TransactionEntity, TransactionModel> transactionEntityModelFun = transactionEntityToModel -> {
+
         String transactionId = transactionEntityToModel.getTransactionId();
         LocalDateTime transactionTime = transactionEntityToModel.getTransactionTime();
         TransactionType transactionType = transactionEntityToModel.getTransactionType();
         BigDecimal amount = transactionEntityToModel.getAmount();
         String transactionDescription = transactionEntityToModel.getTransactionDescription();
         String accountNumber = transactionEntityToModel.getAccountNumber();
-        return new TransactionModel(transactionId, transactionTime, transactionType, amount, transactionDescription, accountNumber);
+
+        return new TransactionModel(transactionId, transactionTime
+                , transactionType, amount, transactionDescription, accountNumber);
     };
 
     /**

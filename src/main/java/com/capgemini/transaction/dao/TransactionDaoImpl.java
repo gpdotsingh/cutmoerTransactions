@@ -58,15 +58,19 @@ public class TransactionDaoImpl implements TransactionDao {
      * @return
      */
     @Override
-    public TransactionModel createTransaction(String custId, String accountNumber, LocalDateTime transactionTime, TransactionType transactionType, BigDecimal amount,String description) {
+    public TransactionModel createTransaction(String custId, String accountNumber
+            , LocalDateTime transactionTime, TransactionType transactionType
+            , BigDecimal amount,String description) {
 
-        TransactionEntity transactionEntity = new TransactionEntity();
-        transactionEntity.setAccountNumber(accountNumber);
-        transactionEntity.setTransactionType(transactionType);
-        transactionEntity.setTransactionId(null);
-        transactionEntity.setTransactionTime(transactionTime);
-        transactionEntity.setTransactionDescription(description);
-        transactionEntity.setAmount(amount);
+        TransactionEntity transactionEntity = TransactionEntity.builder()
+                .accountNumber(accountNumber)
+                .transactionType(transactionType)
+                .transactionTime(transactionTime)
+                .transactionDescription(description)
+                .amount(amount)
+                .build();
+        transactionEntity.setTransactionId();
+
         TransactionEntity updatedTransaction = transactionRepo.save(transactionEntity);
         return utilDto.entityToModelTransaction(updatedTransaction);
     }

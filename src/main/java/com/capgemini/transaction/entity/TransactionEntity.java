@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 @Entity(name = "Transaction_Entity")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TransactionEntity {
     @Id
     @GeneratedValue
@@ -28,7 +31,7 @@ public class TransactionEntity {
     private String accountNumber;
 
 
-    public void setTransactionId(String transactionId) {
+    public void setTransactionId() {
         this.transactionId = this.transactionType.name()+LocalDateTime.now()+this.accountNumber;
     }
 }
